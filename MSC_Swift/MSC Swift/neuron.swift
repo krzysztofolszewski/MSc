@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import QuartzCore
 
 class neuron {
     let inputs: Int
@@ -179,10 +180,7 @@ class neuron {
         var pattern2Occurences: Int
         var pattern3Occurences: Int
         var pattern4Occurences: Int
-//        long tStart = System.currentTimeMillis();
-//        long tEnd;
-//        long tDelta;
-//        double elapsedMinutes;
+        let startTime = CACurrentMediaTime()
 
         var weightsOfBias = [Double](count: hiddens + outputs, repeatedValue: 0)
         var weightsOfHiddens = [Double](count: hiddens * 4, repeatedValue: 0)
@@ -206,11 +204,11 @@ class neuron {
         weightsOfOutputs = randomizeArray(lowestWeight, highest: highestWeight, size: outputs * 2)
 
         while (!compareArrays(outputNeurons1, array2: pattern1) || !compareArrays(outputNeurons2, array2: pattern2) || !compareArrays(outputNeurons3, array2: pattern3) || !compareArrays(outputNeurons4, array2: pattern4)) {
-            pattern1Occurences = 0;
-            pattern2Occurences = 0;
-            pattern3Occurences = 0;
-            pattern4Occurences = 0;
-            steps += 1;
+            pattern1Occurences = 0
+            pattern2Occurences = 0
+            pattern3Occurences = 0
+            pattern4Occurences = 0
+            steps += 1
 
             while (pattern1Occurences == 0 || pattern2Occurences == 0 || pattern3Occurences == 0 || pattern4Occurences == 0) {
                 patternChoice = Int(arc4random_uniform(4)) + 1
@@ -228,24 +226,22 @@ class neuron {
             }
 
             if ((steps % 1000000 == 0 && steps != 0) || steps == 1) {
-//                tEnd = System.currentTimeMillis();
-//                tDelta = tEnd - tStart;
-//                elapsedMinutes = tDelta / 1000.0;
+                let elapsedTime = CACurrentMediaTime() - startTime
 
-                print("Hidden:", steps);
-                printHidden(hiddenLayer1, patternNumber: 1);
-                printHidden(hiddenLayer2, patternNumber: 2);
-                printHidden(hiddenLayer3, patternNumber: 3);
-                printHidden(hiddenLayer4, patternNumber: 4);
-                print("\n");
+                print("Hidden:", steps)
+                printHidden(hiddenLayer1, patternNumber: 1)
+                printHidden(hiddenLayer2, patternNumber: 2)
+                printHidden(hiddenLayer3, patternNumber: 3)
+                printHidden(hiddenLayer4, patternNumber: 4)
+                print("\n")
 
-                print("Epoch:", steps);
-                printOutputs(outputNeurons1, patternNumber: 1);
-                printOutputs(outputNeurons2, patternNumber: 2);
-                printOutputs(outputNeurons3, patternNumber: 3);
-                printOutputs(outputNeurons4, patternNumber: 4);
-                print("\n");
-//                System.out.print(elapsedMinutes);
+                print("Epoch:", steps)
+                printOutputs(outputNeurons1, patternNumber: 1)
+                printOutputs(outputNeurons2, patternNumber: 2)
+                printOutputs(outputNeurons3, patternNumber: 3)
+                printOutputs(outputNeurons4, patternNumber: 4)
+                print("\n")
+                print("Elapsed time:", elapsedTime)
             }
         }
 

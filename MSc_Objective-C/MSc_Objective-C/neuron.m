@@ -4,6 +4,7 @@
 //
 
 #import "neuron.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation neuron
 
@@ -175,6 +176,8 @@ void calculateWeights(double *outputError, double *hiddenError, double *hiddenLa
     int pattern2Occurences = 0;
     int pattern3Occurences = 0;
     int pattern4Occurences = 0;
+    CFTimeInterval startTime = CACurrentMediaTime();
+    CFTimeInterval elapsedTime;
 
     double weightsOfBias[6] = {0, 0, 0, 0, 0, 0};
     double weightsOfHiddens[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -225,6 +228,8 @@ void calculateWeights(double *outputError, double *hiddenError, double *hiddenLa
         }
 
         if ((steps % 1000000 == 0 && steps != 0) || steps == 1) {
+            elapsedTime = CACurrentMediaTime() - startTime;
+
             NSLog(@"Hidden: %i", steps);
             printHidden(hiddenLayer1, 1);
             printHidden(hiddenLayer2, 2);
@@ -236,6 +241,7 @@ void calculateWeights(double *outputError, double *hiddenError, double *hiddenLa
             printOutputs(outputNeurons2, 2);
             printOutputs(outputNeurons3, 3);
             printOutputs(outputNeurons4, 4);
+            NSLog(@"Elapsed time: %lf", elapsedTime);
         }
     }
 
